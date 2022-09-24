@@ -59,7 +59,3 @@ function onRenderGallery(data) {
     refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 
 }
-
-function onScrollmake(data) {
-
-}
