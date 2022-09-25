@@ -13,7 +13,9 @@ const refs = {
     loadMoreBtn: document.querySelector('.load-more'),
 };
 
+
 const newsApiService = new NewsApiService();
+let pegGalery = 1;
 
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -46,11 +48,23 @@ function onSearch(e) {
 
             onRenderGallery(data);
             Notify.success(`Hooray! We found ${data.totalHits} images !!!`);
+            new SimpleLightbox('.gallery a', {});
+
         });
 }
 
+
+
 function onLoadMore() {
-    newsApiService.fetchGalleryCards().then(onScrollmake);
+    pegGalery++;
+    newsApiService.page = pegGalery;
+    newsApiService.fetchGalleryCards().then(data => {
+        onRenderGallery(data);
+        Notify.success(`Hooray! We found ${data.totalHits} images !!!`);
+        new SimpleLightbox('.gallery a', {});
+
+    });
+
 }
 
 
@@ -59,3 +73,4 @@ function onRenderGallery(data) {
     refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 
 }
+
